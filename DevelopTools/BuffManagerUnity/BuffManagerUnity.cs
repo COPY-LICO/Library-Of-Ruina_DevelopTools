@@ -16,65 +16,80 @@ namespace DevelopTools
         // BaseFunction
 
         // =========== Init Advanced Function ===========
-        public static void ActiveAdvancedFunction(string packageid)
+        public static void EnableAdvancedFunction()
         {
             if (_isInit)
                 return;
-            var harmony = new Harmony(packageid);
-            harmony.PatchAll();
+            if (GamesLoader.harmony == null)
+                return;
+
+            GamesLoader.harmony.PatchAll(typeof(OnRoundEnd_Patch));
+            GamesLoader.harmony.PatchAll(typeof(OnWaveStart_Patch));
             _isInit = true;
         }
 
 
         // =========== Picture Loader =========
 
-        // 图片加载
+        // 图片加载 - Buff图片资源
         public static void LoadImage(BattleUnitBuf buf, string name)
         {
-            if (!_artWorks.TryGetValue(name, out var sprite))
+            if (!FilesLoader._artWorks.TryGetValue(name, out var sprite))
             {
                 Debug.LogWarning($"[BuffManager] 未找到图片: {name}");
                 return;
             }
 
-            typeof(BattleUnitBuf).GetField("_bufIcon", AccessTools.all).SetValue(buf, _artWorks[name]);
+            typeof(BattleUnitBuf).GetField("_bufIcon", AccessTools.all).SetValue(buf, FilesLoader._artWorks[name]);
             typeof(BattleUnitBuf).GetField("_iconInit", AccessTools.all).SetValue(buf, true);
         }
 
-        // 指定图片文件路径
-        public static void SetImageLoadPath(DirectoryInfo dir)
+        // 图片加载 - 书页Buff图片资源
+        public static void LoadImage(BattleDiceCardBuf buf, string name)
         {
-            _artWorks.Clear();
-            GetArtWorks(dir);
-        }
-
-        // 指定图片文件加载文件夹
-        public static void SetImageLoadDict(Dictionary<string, Sprite> artworks)
-        {
-            _artWorks = artworks;
-        }
-
-        // 私有 - 读取图片文件
-        private static void GetArtWorks(DirectoryInfo dir)
-        {
-            if (dir.GetDirectories().Length != 0)
+            if (!FilesLoader._artWorks.TryGetValue(name, out var sprite))
             {
-                DirectoryInfo[] directories = dir.GetDirectories();
-                for (int i = 0; i < directories.Length; i++)
-                {
-                    GetArtWorks(directories[i]);
-                }
+                Debug.LogWarning($"[BuffManager] 未找到图片: {name}");
+                return;
             }
-            foreach (System.IO.FileInfo fileInfo in dir.GetFiles())
-            {
-                Texture2D texture2D = new Texture2D(2, 2);
-                texture2D.LoadImage(File.ReadAllBytes(fileInfo.FullName));
-                Sprite value = Sprite.Create(texture2D, new Rect(0f, 0f, (float)texture2D.width, (float)texture2D.height), new Vector2(0f, 0f));
-                string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(fileInfo.FullName);
-                _artWorks[fileNameWithoutExtension] = value;
-            }
+
+            typeof(BattleDiceCardBuf).GetField("_bufIcon", AccessTools.all).SetValue(buf, FilesLoader._artWorks[name]);
+            typeof(BattleDiceCardBuf).GetField("_iconInit", AccessTools.all).SetValue(buf, true);
         }
 
+        // ========= CardBuff Picture Operator =========
+
+        public static void AddCardBuff(BattleDiceCardBuf buf, BattleUnitModel model, BattleDiceCardModel card)
+        {
+            CardAllyManagerUnity.GetTopCard(model, card).AddBuf(buf);
+        }
+
+        public static void AddCardBuff(BattleDiceCardBuf buf, BattleUnitModel model, LorId lorid)
+        {
+            CardAllyManagerUnity.GetTopCard(model, lorid).AddBuf(buf);
+        }
+
+        public static void DestoryCardBuff(BattleDiceCardBuf buf, BattleUnitModel model, BattleDiceCardModel card)
+        {
+            CardAllyManagerUnity.GetTopCard(model, card).RemoveBuf(buf);
+        }
+
+        public static void DestoryCardBuff(BattleDiceCardBuf buf, BattleUnitModel model, LorId lorid)
+        {
+            CardAllyManagerUnity.GetTopCard(model, lorid).RemoveBuf(buf);
+        }
+
+        public static void TransferCardBuf(BattleDiceCardBuf buf, BattleDiceCardModel card, BattleUnitModel from, BattleUnitModel to)
+        {
+            CardAllyManagerUnity.GetTopCard(from, card).RemoveBuf(buf);
+            CardAllyManagerUnity.GetTopCard(to, card).AddBuf(buf);
+        }
+
+        public static void TransferCardBuf(BattleDiceCardBuf buf, LorId lorid, BattleUnitModel from, BattleUnitModel to)
+        {
+            CardAllyManagerUnity.GetTopCard(from, lorid).RemoveBuf(buf);
+            CardAllyManagerUnity.GetTopCard(to, lorid).AddBuf(buf);
+        }
 
         // =========== Buff Operator =============
 
@@ -268,8 +283,6 @@ namespace DevelopTools
 
         // 初始化高级功能
         private static bool _isInit = false;
-        // 图片资源
-        private static Dictionary<string, Sprite> _artWorks = new Dictionary<string, Sprite>();
     }
 
     // =========== InterFace =================
