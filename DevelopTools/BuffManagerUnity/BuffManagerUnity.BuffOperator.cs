@@ -39,7 +39,7 @@ namespace DevelopTools
             for (int i = _buflist.Count - 1; i >= 0; i--)
             {
                 BattleUnitBuf buf = _buflist[i];
-                _buflist.Remove(buf);
+                buf.Destroy();
             }
             _buflist.Clear();
         }

@@ -1,13 +1,15 @@
-﻿using System;
+﻿using HarmonyLib;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using UnityEngine;
 
 namespace DevelopTools
 {
-    public class CharacterModelUnity
+    public static partial class CharacterModelUnity
     {
         // 获取己方阵营标志
         public static Faction GetSelfFaction(BattleUnitModel unit)
@@ -50,5 +52,7 @@ namespace DevelopTools
         {
             return BattleObjectManager.instance.GetList(faction).Count - BattleObjectManager.instance.GetAliveList(faction).Count;
         }
+
+       // private static bool _isPatch = false;
     }
 }

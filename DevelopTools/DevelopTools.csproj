@@ -78,13 +78,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BuffManagerUnity.BuffOperator.cs" />
-    <Compile Include="BuffManagerUnity.cs" />
-    <Compile Include="BuffManagerUnity.Patch.cs" />
-    <Compile Include="CardAllyManagerUnity.Patch.cs" />
-    <Compile Include="CardAllyManagerUnity.CardOperator.cs" />
-    <Compile Include="CardAllyManagerUnity.cs" />
+    <Compile Include="BuffManagerUnity\BuffManagerUnity.BuffOperator.cs" />
+    <Compile Include="BuffManagerUnity\BuffManagerUnity.cs" />
+    <Compile Include="BuffManagerUnity\BuffManagerUnity.Patch.cs" />
+    <Compile Include="CardAllyManagerUnity\CardAllyManagerUnity.Patch.cs" />
+    <Compile Include="CardAllyManagerUnity\CardAllyManagerUnity.CardOperator.cs" />
+    <Compile Include="CardAllyManagerUnity\CardAllyManagerUnity.cs" />
     <Compile Include="CharacterModelUnity.cs" />
+    <Compile Include="CharacterModelUnity.Resigter.cs" />
+    <Compile Include="FilesLoader.cs" />
     <Compile Include="GamesLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
