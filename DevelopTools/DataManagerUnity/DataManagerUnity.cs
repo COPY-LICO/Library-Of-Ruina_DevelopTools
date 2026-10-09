@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DevelopTools.DataManagerUnity
+namespace DevelopTools
 {
     public static partial class DataManagerUnity
     {
