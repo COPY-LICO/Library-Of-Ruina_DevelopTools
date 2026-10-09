@@ -24,7 +24,10 @@ namespace DevelopTools
             if (_isInit)
                 return;
             if (GamesLoader.harmony == null)
+            {
+                GamesLoader.Log("Error: Not Rejister An Availiable Harmony");
                 return;
+            }
 
             GamesLoader.harmony.PatchAll(typeof(EnableOnlyPage_Patch));
             _isInit = true;
@@ -33,11 +36,16 @@ namespace DevelopTools
         // 是否启用高级功能
         public static void EnableAdvancedFunction()
         {
+            if (GamesLoader.harmony == null)
+            {
+                GamesLoader.Log("Error: Not Rejister An Availiable Harmony");
+                return;
+            }
+
             GamesLoader.harmony.PatchAll(typeof(OnRoundEnd_Patch));
             GamesLoader.harmony.PatchAll(typeof(OnWaveStart_Patch));
+            GamesLoader.Log("Info: Successfully Patch CardAllyManagerUnity");
         }
-
-
 
 
         // ========= Card Operator ============

@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace DevelopTools
 {
     public static partial class CardAllyManagerUnity
     {
-
         // ======== run logical =============
 
         private static void OnRoundEnd()
@@ -17,20 +17,18 @@ namespace DevelopTools
             {
                 Pair pair = _modelcardlist[i];
                 pair.insistRound--;
-
                 if (pair.insistRound <= 0)
                 {
                     _modelcardlist.Remove(pair);
-                    
-                    if(pair.liveList == CardList.egolist)
+                    if (pair.liveList == CardList.egolist)
                         pair.card.owner.personalEgoDetail.RemoveCard(pair.card.GetID());
                     else if(pair.liveList == CardList.normallist)
-                        pair.card.owner.allyCardDetail.ExhaustCard(pair.card.GetID());
+                        pair.card.owner.allyCardDetail.ExhaustCardInHand(pair.card.GetID());
                 }
             }
         }
 
-        private static void OnWaveStart()
+        private static void OnWaveEnd()
         {
             for (int i = _modelcardlist.Count - 1; i >= 0; i--)
             {
@@ -46,27 +44,24 @@ namespace DevelopTools
         {
             BattleDiceCardModel card = null;
             // 添加槽
-            if (cardlist == CardList.normallist)
-            {
-                 card = model.allyCardDetail.AddNewCard(lorid);
-            }
-            else if (cardlist == CardList.egolist)
-            {
-                 model.personalEgoDetail.AddCard(lorid);
-                 card = model.personalEgoDetail.GetCardAll().Find(x => x.GetID().id == lorid.id);
-            }
-            else
-            {
-                return;
-            }
-
-            if (card == null)
-                return;
-
             // 添加Buff
             if (startbuf != null)
             {
                 card.AddBuf(startbuf);
+            }
+
+            if (cardlist == CardList.normallist)
+            {
+                card = model.allyCardDetail.AddNewCard(lorid);
+            }
+            else if (cardlist == CardList.egolist)
+            {
+                model.personalEgoDetail.AddCard(lorid);
+                card = model.personalEgoDetail.GetCardAll().Find(x => x.GetID().id == lorid.id);
+            }
+            else
+            {
+                return;
             }
 
             // 是否进入牌库
@@ -74,6 +69,16 @@ namespace DevelopTools
             {
                 card.exhaust = true;
             }
+            else if (ability == CardAbility.permanent)
+            {
+                card.exhaust = false;
+            }
+
+            if (card == null)
+            {
+                GamesLoader.Log($"Error: Can not get lorid : {lorid} card, card will fallback to default");
+            }
+             
 
             // 卡牌存活回合数 - 0为不会自毁，不进入循环
             if(insistRound > 0)

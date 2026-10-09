@@ -34,7 +34,7 @@ namespace DevelopTools
             }
         }
 
-        private static void OnWaveStart()
+        private static void OnWaveEnd()
         {
             for (int i = _buflist.Count - 1; i >= 0; i--)
             {
