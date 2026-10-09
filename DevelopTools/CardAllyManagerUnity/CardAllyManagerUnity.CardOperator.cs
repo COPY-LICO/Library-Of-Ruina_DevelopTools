@@ -105,22 +105,22 @@ namespace DevelopTools
             public CardList liveList;
         }
 
-
-        // ========== Enum ===========
-        public enum CardList
-        {
-            normallist,
-            egolist
-        }
-
-        public enum CardAbility
-        {
-            temp,
-            permanent
-        }
-
         // ego和普通书页栏
         private static List<Pair> _modelcardlist = new List<Pair>();
 
     }
+
+    // ========== Enum ===========
+    public enum CardList
+    {
+        normallist,
+        egolist
+    }
+
+    public enum CardAbility
+    {
+        temp,
+        permanent
+    }
+
 }
