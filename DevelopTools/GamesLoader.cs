@@ -24,6 +24,7 @@ namespace DevelopTools
             DirectoryInfo dirInfo = new DirectoryInfo(dir);
             FilesLoader._artWorks.Clear();
             FilesLoader.GetArtWorks(dirInfo);
+            GamesLoader.Log($"Info: SetImageLoadPath is {dir}");
         }
 
         public static void SetImageLoadPath(DirectoryInfo dir)
@@ -43,6 +44,29 @@ namespace DevelopTools
         {
             _packageid = packageid;
             harmony = new Harmony(packageid);
+            GamesLoader.Log($"Info: Register A Harmony : {packageid}");
+        }
+
+        // 日志
+        public static void Log(string msg)
+        {
+            try
+            {
+                string path = Path.Combine(GamesLoader.GetDllPath(), "tool_logs.txt");
+                File.AppendAllText(path, DateTime.Now.ToString("HH:mm:ss.fff") + "  " + msg + "\n");
+            }
+            catch { }
+        }
+
+        // 删除日志
+        public static void DeleteLog()
+        {
+            string logPath = Path.Combine(GamesLoader.GetDllPath(), "tool_logs.txt");
+
+            if (File.Exists(logPath))
+            {
+                File.Delete(logPath);
+            }
         }
 
 

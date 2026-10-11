@@ -84,8 +84,10 @@
     <Compile Include="CardAllyManagerUnity\CardAllyManagerUnity.Patch.cs" />
     <Compile Include="CardAllyManagerUnity\CardAllyManagerUnity.CardOperator.cs" />
     <Compile Include="CardAllyManagerUnity\CardAllyManagerUnity.cs" />
-    <Compile Include="CharacterModelUnity.cs" />
-    <Compile Include="CharacterModelUnity.Resigter.cs" />
+    <Compile Include="CharacterModelUnity\CharacterModelUnity.cs" />
+    <Compile Include="CharacterModelUnity\CharacterModelUnity.Resigter.cs" />
+    <Compile Include="DataManagerUnity\DataManagerUnity.Patch.cs" />
+    <Compile Include="DataManagerUnity\DataManagerUnity.cs" />
     <Compile Include="FilesLoader.cs" />
     <Compile Include="GamesLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

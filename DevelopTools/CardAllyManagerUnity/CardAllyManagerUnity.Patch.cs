@@ -37,13 +37,13 @@ namespace DevelopTools
             }
         }
 
-        [HarmonyPatch(typeof(StageController), nameof(StageController.StartBattle))]
+        [HarmonyPatch(typeof(StageController), "CloseBattleScene")]
         public static class OnWaveStart_Patch
         {
             [HarmonyPostfix]
             public static void Postfix()
             {
-                CardAllyManagerUnity.OnWaveStart();
+                CardAllyManagerUnity.OnWaveEnd();
             }
         }
 

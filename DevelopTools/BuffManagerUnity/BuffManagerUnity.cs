@@ -21,11 +21,15 @@ namespace DevelopTools
             if (_isInit)
                 return;
             if (GamesLoader.harmony == null)
+            {
+                GamesLoader.Log("Error: Not Rejister An Availiable Harmony");
                 return;
+            }
 
             GamesLoader.harmony.PatchAll(typeof(OnRoundEnd_Patch));
             GamesLoader.harmony.PatchAll(typeof(OnWaveStart_Patch));
             _isInit = true;
+            GamesLoader.Log("Info: Successfully Patch BuffManagerUnity");
         }
 
 
@@ -36,7 +40,7 @@ namespace DevelopTools
         {
             if (!FilesLoader._artWorks.TryGetValue(name, out var sprite))
             {
-                Debug.LogWarning($"[BuffManager] 未找到图片: {name}");
+                GamesLoader.Log($"[BuffManager] 未找到图片: {name}");
                 return;
             }
 
@@ -49,7 +53,7 @@ namespace DevelopTools
         {
             if (!FilesLoader._artWorks.TryGetValue(name, out var sprite))
             {
-                Debug.LogWarning($"[BuffManager] 未找到图片: {name}");
+                GamesLoader.Log($"[BuffManager] 未找到图片: {name}");
                 return;
             }
 
