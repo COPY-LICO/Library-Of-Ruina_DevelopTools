@@ -45,9 +45,13 @@ namespace DevelopTools
         }
 
         // ======== buf operator ========
-        public static int GetBufInsistRound(BattleUnitBuf buf)
+        public static int GetBufInsistRound(BattleUnitBuf buf,BattleUnitModel model)
         {
-            if (buf is IInsistRound insistRound)
+            var tempBuff = GetActiveBuff(buf, model);
+            if (tempBuff == null)
+                return -1;
+
+            if (tempBuff is IInsistRound insistRound)
             {
                 return insistRound.InsistRound;
             }

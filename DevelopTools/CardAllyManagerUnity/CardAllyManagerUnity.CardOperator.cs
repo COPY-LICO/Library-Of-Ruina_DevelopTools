@@ -23,7 +23,7 @@ namespace DevelopTools
                     if (pair.liveList == CardList.egolist)
                         pair.card.owner.personalEgoDetail.RemoveCard(pair.card.GetID());
                     else if(pair.liveList == CardList.normallist)
-                        pair.card.owner.allyCardDetail.ExhaustCardInHand(pair.card.GetID());
+                        pair.card.owner.allyCardDetail.DiscardACardByAbility(pair.card);
                 }
             }
         }

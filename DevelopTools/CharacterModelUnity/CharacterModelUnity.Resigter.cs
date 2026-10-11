@@ -82,18 +82,18 @@ namespace DevelopTools
             return op;
         }
 
-        public static Operator.CoreCardOperator CreateCoreCardOperator(Operator operation = null,bool autoAdd = true)
+        public static Operator.CoreCardOperator CreateCoreCardOperator(Operator operation = null)
         {
             var op = new Operator.CoreCardOperator();
-            if (autoAdd == true && operation != null)
+            if (operation != null)
                 operation._corecardOperator.Add(op);
             return op;
         }
 
-        public static Operator.BattleCardOperator CreateBattleCardOperator(Operator operation = null, bool autoAdd = true)
+        public static Operator.BattleCardOperator CreateBattleCardOperator(Operator operation = null)
         {
             var op = new Operator.BattleCardOperator();
-            if (autoAdd == true && operation != null)
+            if (operation != null)
                 operation._cardoperator.Add(op);
             return op;
         }

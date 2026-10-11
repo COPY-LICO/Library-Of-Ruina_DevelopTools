@@ -23,7 +23,7 @@ namespace DevelopTools
             GamesLoader.Log("Info: Successfully Patch DataManagerUnity");
         }
 
-        public static void OnInvitionEnd()
+        private static void OnInvitionEnd()
         {
             _dataDict.Clear();
         }
