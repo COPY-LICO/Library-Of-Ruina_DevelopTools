@@ -44,11 +44,7 @@ namespace DevelopTools
         {
             BattleDiceCardModel card = null;
             // 添加槽
-            // 添加Buff
-            if (startbuf != null)
-            {
-                card.AddBuf(startbuf);
-            }
+
 
             if (cardlist == CardList.normallist)
             {
@@ -78,10 +74,15 @@ namespace DevelopTools
             {
                 GamesLoader.Log($"Error: Can not get lorid : {lorid} card, card will fallback to default");
             }
-             
+            // 添加Buff
+            if (startbuf != null)
+            {
+                card.AddBuf(startbuf);
+            }
+
 
             // 卡牌存活回合数 - 0为不会自毁，不进入循环
-            if(insistRound > 0)
+            if (insistRound > 0)
             {
                 Pair pair = new Pair(card, model, insistRound,cardlist);
                 _modelcardlist.Add(pair);
